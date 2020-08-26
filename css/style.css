@@ -1,0 +1,38 @@
+#title-block {
+    display: flex;
+    justify-content: center;
+}
+#controls {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+div {
+    /*border: 2px black solid; */
+}
+#sketch-container {
+    display: grid;
+    grid-template-columns: 0;
+    grid-template-rows: 0;
+    border: 2px black solid;
+    /*
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    */
+}
+.sketch-pixel {
+    margin: 0px;
+    padding: 0px;
+    min-width: 24.8%;
+    height: 200px;
+    border: 1px red dashed;
+    background-color: white;
+}
+/*
+.sketch-pixel:hover {
+    background-color: black;
+}
+*/
+.on-pixel {
+    background-color: black;
+}

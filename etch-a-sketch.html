@@ -1,0 +1,102 @@
+<!--TO DO
+1) FIX IT SO THAT THE CSS STYLES THE PIXEL WIDTH AND HEIGHT DEPENDING ON HOW MANY ARE ON A SIDE
+1.b  CHANGE IT SO THAT THE SKETCH-CONTAINER USES DISPLAY: GRID INSTEAD OF FLEX
+1.C LEARN ABOUT CSS GRID STYLES
+-->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Etch-a-Sketch-in-js</title>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width", initial-scale="1.0">
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body>
+
+    <div id="title-block">
+    <h1>Etch-a-Sketch</h1>
+    </div>
+
+    <div id="controls">
+      <button type="button" id="new-grid-button" onclick="customGrid(); return false">Make a New Grid</button>
+    </div>
+
+    <!--The etch a sketch grid will be populated with javascript-->
+    <div id="sketch-container">
+    </div>
+
+  
+  <script>
+//*************************************************************************************************************
+//Functions used to create and manipulate the etch a sketch grid
+//*************************************************************************************************************
+    //Creates the grid for the etch a sketch
+    function makeGrid(totalGridSquares) {
+      const container = document.querySelector('#sketch-container');
+      container.innerHTML = "";
+      container.style['grid-template-columns'] = totalGridSquares;
+      container.style['grid-template-rows'] = totalGridSquares;
+      for (let i = 0; i < totalGridSquares; ++i ) {
+      let mkDiv = document.createElement('div');
+      mkDiv.setAttribute("class", "sketch-pixel");
+      container.appendChild(mkDiv);
+      }
+    }
+
+    /*USE THIS FUNCTION TO ALTER THE MAKEGRID, SO THAT YOU CAN MAKE A GRID TO A SPECIFIED SIZE
+     function createGrid(size) {
+
+            container.innerHTML = "";
+            container.style.gridTemplateColumns = `repeat(${size},auto)`;
+            for (i = 0; i < size; i++) {
+                for (j = 0; j < size; j++) {
+                    let div = document.createElement("div");
+                    container.appendChild(div);
+                    div.classList.add("field");
+                    div.setAttribute("data-counter",10);
+                }
+            }
+            https://github.com/jcsorgei/etch-a-sketch/blob/master/index.html
+            */
+
+    //removes the grid from the etch a sketch
+    function removeGrid() {
+      const container = document.querySelector('#sketch-container');
+      while (container.firstChild) {
+        container.removeChild(container.lastChild);
+      }
+    }
+
+    //makes a grid with a user specified side length
+    function customGrid() {
+      let sideLength = prompt("Enter the amount of pixels on the new grid's side...")
+      //type check to ensure user enters a valid number
+      if (+sideLength === parseInt(sideLength)) {
+        removeGrid();
+        makeGrid((sideLength*sideLength));
+      }
+      else {
+        alert("That is not a valid number.");
+      }
+    }
+
+    //upon page load populates the webpage with a 4x4 grad  
+    //makeGrid(16);
+  </script>
+
+  <script>
+//*************************************************************************************************************
+//Event handlers
+//*************************************************************************************************************
+    //event handlers used to control the etch a sketch
+    let pixelGrid = document.querySelectorAll('.sketch-pixel');
+    //iterates through the node list and checks to see if the mouse has entered a pixel
+    pixelGrid.forEach((pixel) => {
+      pixel.addEventListener('mouseenter', () => {
+        pixel.classList.toggle("on-pixel");
+      });
+    });
+
+  </script>
+</body>
+</html>
