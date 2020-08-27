@@ -2,37 +2,44 @@
     display: flex;
     justify-content: center;
 }
-#controls {
+#controls-container {
+    display: flex;
+    justify-content: center;
     margin-top: 1rem;
     margin-bottom: 1rem;
+    
 }
-div {
-    /*border: 2px black solid; */
+#controls {
+    width: 600px;
+    display: flex;
+    justify-content: space-between;
+}
+.control-label {
+    margin: 0.5rem;
+}
+#grid-container {
+    display: flex;
+    justify-content: center;
+    
+
 }
 #sketch-container {
     display: grid;
-    grid-template-columns: 0;
-    grid-template-rows: 0;
+    grid-template-columns: auto auto auto auto;
+    grid-template-rows: auto auto auto auto;
     border: 2px black solid;
-    /*
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    */
+    width: 600px;
+    height: 600px;
 }
 .sketch-pixel {
     margin: 0px;
     padding: 0px;
-    min-width: 24.8%;
-    height: 200px;
-    border: 1px red dashed;
+    border: 1px grey dashed;
     background-color: white;
 }
-/*
-.sketch-pixel:hover {
-    background-color: black;
-}
-*/
+
 .on-pixel {
     background-color: black;
+    color: black;
+    color: red;
 }

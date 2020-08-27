@@ -1,7 +1,5 @@
 <!--TO DO
-1) FIX IT SO THAT THE CSS STYLES THE PIXEL WIDTH AND HEIGHT DEPENDING ON HOW MANY ARE ON A SIDE
-1.b  CHANGE IT SO THAT THE SKETCH-CONTAINER USES DISPLAY: GRID INSTEAD OF FLEX
-1.C LEARN ABOUT CSS GRID STYLES
+1) MAKE AN EVENT HANDLER THAT CONTROLS THE MODE OF THE ETCH A SKETCH
 -->
 <!DOCTYPE html>
 <html>
@@ -17,86 +15,96 @@
     <h1>Etch-a-Sketch</h1>
     </div>
 
-    <div id="controls">
-      <button type="button" id="new-grid-button" onclick="customGrid(); return false">Make a New Grid</button>
-    </div>
+    <div id="controls-container">
+      <div id="controls">
+        <button type="button" id="new-grid-button" onclick="customGrid(); return false">Make a New Grid</button>
+        <div id="mode-group">
+          <label class="control-label" for="black-white"><input type="radio" id="black-white" class="mode" name="mode" value="1" checked="true"> Black</label>
+          <label class="control-label" for="dimmer"><input type="radio" id="dimmer" class="mode" name="mode" value="2"> Dimmer</label>
+          <label class="control-label" for="color-rdm"><input type="radio" id="color-rdm" class="mode" name="mode" value="3"> Random Color</label>
+        </div> <!--End mode-group-->
+      </div><!--End controls-->
+    </div><!--End controls-container-->
 
     <!--The etch a sketch grid will be populated with javascript-->
-    <div id="sketch-container">
+    <div id="grid-container">
+    <div id="sketch-container"></div>
     </div>
 
   
   <script>
+    let sketchMode = 1; //global variable used to store what the current sketch mode is. Controlled by page radio buttons
+
 //*************************************************************************************************************
 //Functions used to create and manipulate the etch a sketch grid
 //*************************************************************************************************************
+    //*************************************************************************************************************
     //Creates the grid for the etch a sketch
-    function makeGrid(totalGridSquares) {
+    function makeGrid(SideL) {
       const container = document.querySelector('#sketch-container');
-      container.innerHTML = "";
-      container.style['grid-template-columns'] = totalGridSquares;
-      container.style['grid-template-rows'] = totalGridSquares;
-      for (let i = 0; i < totalGridSquares; ++i ) {
+      container.style.gridTemplateColumns = `repeat(${SideL}, ${100/SideL}%)`
+      container.style.gridTemplateRows = `repeat(${SideL}, ${100/SideL}%)`
+      for (let i = 0; i < (SideL*SideL); ++i ) {
       let mkDiv = document.createElement('div');
       mkDiv.setAttribute("class", "sketch-pixel");
       container.appendChild(mkDiv);
       }
     }
-
-    /*USE THIS FUNCTION TO ALTER THE MAKEGRID, SO THAT YOU CAN MAKE A GRID TO A SPECIFIED SIZE
-     function createGrid(size) {
-
-            container.innerHTML = "";
-            container.style.gridTemplateColumns = `repeat(${size},auto)`;
-            for (i = 0; i < size; i++) {
-                for (j = 0; j < size; j++) {
-                    let div = document.createElement("div");
-                    container.appendChild(div);
-                    div.classList.add("field");
-                    div.setAttribute("data-counter",10);
-                }
-            }
-            https://github.com/jcsorgei/etch-a-sketch/blob/master/index.html
-            */
-
+    //*************************************************************************************************************
     //removes the grid from the etch a sketch
     function removeGrid() {
       const container = document.querySelector('#sketch-container');
       while (container.firstChild) {
         container.removeChild(container.lastChild);
       }
-    }
 
+    }
+    //*************************************************************************************************************
     //makes a grid with a user specified side length
     function customGrid() {
       let sideLength = prompt("Enter the amount of pixels on the new grid's side...")
+
       //type check to ensure user enters a valid number
       if (+sideLength === parseInt(sideLength)) {
-        removeGrid();
-        makeGrid((sideLength*sideLength));
+
+        //delete replace the previous grid with a new one and refresh the event handler for the new grid
+        removeGrid();        
+        makeGrid((sideLength));
+        eventRefresh();
       }
       else {
         alert("That is not a valid number.");
       }
     }
 
-    //upon page load populates the webpage with a 4x4 grad  
-    //makeGrid(16);
-  </script>
-
-  <script>
-//*************************************************************************************************************
-//Event handlers
-//*************************************************************************************************************
-    //event handlers used to control the etch a sketch
-    let pixelGrid = document.querySelectorAll('.sketch-pixel');
-    //iterates through the node list and checks to see if the mouse has entered a pixel
-    pixelGrid.forEach((pixel) => {
-      pixel.addEventListener('mouseenter', () => {
-        pixel.classList.toggle("on-pixel");
+  //*************************************************************************************************************
+  //Event handlers
+  //*************************************************************************************************************
+  //*************************************************************************************************************
+  //attaches new event listeners to each cell in the new grid
+  function eventRefresh() {
+      //event handlers used to control the etch a sketch
+      let pixelGrid = document.querySelectorAll('.sketch-pixel');
+      //iterates through the node list and checks to see if the mouse has entered a pixel
+      pixelGrid.forEach((pixel) => {
+        pixel.addEventListener('mouseenter', () => {
+          pixel.classList.toggle("on-pixel");
+          console.log("the pixel should have changed color");
+        });
       });
-    });
+  }
+  //*************************************************************************************************************
+  //listens to see if the user selects a different drawing mode
+  let radioButtons = document.querySelectorAll('.mode');
+  radioButtons.forEach((radio) => {
+    radio.addEventListener('change', () => {
+      sketchMode = radio.value;
+      console.log(sketchMode); });
+  });
 
+    //upon page load populates the webpage with a 4x4 grad  
+    makeGrid(4);
+    eventRefresh();
   </script>
 </body>
 </html>
