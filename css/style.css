@@ -1,3 +1,6 @@
+body {
+    background:url(../background/spikes.png);
+}
 #title-block {
     display: flex;
     justify-content: center;
@@ -10,7 +13,7 @@
     
 }
 #controls {
-    width: 600px;
+    width: 700px;
     display: flex;
     justify-content: space-between;
 }
@@ -20,6 +23,7 @@
 #grid-container {
     display: flex;
     justify-content: center;
+    background-image: white;
     
 
 }
@@ -30,16 +34,23 @@
     border: 2px black solid;
     width: 600px;
     height: 600px;
+    background-image: linear-gradient(white, white);
 }
 .sketch-pixel {
     margin: 0px;
     padding: 0px;
     border: 1px grey dashed;
-    background-color: white;
+    opacity: 1;
+    
 }
 
 .on-pixel {
     background-color: black;
-    color: black;
-    color: red;
 }
+.darkerEveryHover {
+    background-color: rgb(230,230,230);
+}
+.randomColor {
+    background-color: rgb(185, 221, 53);
+}
+
