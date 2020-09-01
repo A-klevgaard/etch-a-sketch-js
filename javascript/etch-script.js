@@ -68,7 +68,7 @@ let sketchMode = "1"; //global variable used to store what the current sketch mo
       });
     }
     //*************************************************************************************************************
-    //simple function to get an intger from between 2 numbers
+    //simple function to get an integer from between 2 numbers
     function randomIntFromInterval(min, max) { 
     return Math.floor(Math.random() * (max - min + 1) + min);
 }
